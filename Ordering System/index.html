@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1128 Cafe POS</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header class="navbar">
+      <nav class="menu">
+        <img src="../Assets/image/logo.png" class="logo" />
+        <ul>
+          <li class="menu-item" onclick="toggleSubMenu('order-management')">
+            <a href="../index.html">Home</a>
+          </li>
+          <li class="menu-item" onclick="toggleSubMenu('order-management')">
+            Order Management
+            <ul class="submenu" id="order-management">
+              <li>
+                <a href="#">Ordering System</a>
+              </li>
+              <li>
+                <a href="../Report/report.html">View Orders</a>
+              </li>
+            </ul>
+          </li>
+          <li class="menu-item" onclick="toggleSubMenu('product-management')">
+            Product Management
+            <ul class="submenu" id="product-management">
+              <li>Add Product</li>
+              <li>Edit Product</li>
+              <li>Delete Product</li>
+            </ul>
+          </li>
+          <li class="menu-item" onclick="toggleSubMenu('reports')">
+            Reports
+            <ul class="submenu" id="reports">
+              <li>View Sales Report</li>
+              <li>View Inventory Report</li>
+            </ul>
+          </li>
+          <li class="menu-item" onclick="toggleSubMenu('rewards-loyalty')">
+            Rewards & Loyalty
+            <ul class="submenu" id="rewards-loyalty">
+              <li>View Customer Points</li>
+              <li>Redeem Rewards</li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="pos-system">
+      <main>
+        <h1>Ordering System</h1>
+        <br />
+        <section class="order-section">
+          <h2>Select Item</h2>
+          <div class="selection-section">
+            <!-- Category Section -->
+            <div class="selection-row" id="categorySection">
+              <h3>Category</h3>
+              <div class="category-selection">
+                <button onclick="selectCategory('Iced Coffee')">
+                  <img
+                    src="../Assets/image/coldbrew.png"
+                    alt="Iced Coffee Logo"
+                    class="category-logo"
+                  />
+                  Iced Coffee
+                </button>
+                <button onclick="selectCategory('Milk Tea')">
+                  <img
+                    src="../Assets/image/"
+                    alt="Milk Tea Logo"
+                    class="category-logo"
+                  />
+                  Milk Tea
+                </button>
+                <button onclick="selectCategory('Hot Drink')">
+                  <img
+                    src="../Assets/image/Hotbrew.png"
+                    alt="Hot Drink Logo"
+                    class="category-logo"
+                  />
+                  Hot Drink
+                </button>
+                <button onclick="selectCategory('Fruit Tea')">
+                  <img
+                    src="../Assets/image/fruit tea.png"
+                    alt="Fruit Tea Logo"
+                    class="category-logo"
+                  />
+                  Fruit Tea
+                </button>
+                <button onclick="selectCategory('Frappe')">
+                  <img
+                    src="../Assets/image/frappe.png"
+                    alt="Frappe Logo"
+                    class="category-logo"
+                  />
+                  Frappe
+                </button>
+                <button onclick="selectCategory('Premium Frappe')">
+                  <img
+                    src="../Assets/image/premium frappe.png"
+                    alt="Premium Frappe Logo"
+                    class="category-logo"
+                  />
+                  Premium Frappe
+                </button>
+                <button onclick="selectCategory('Milk Series')">
+                  <img
+                    src="../Assets/image/milk series.png"
+                    alt="Milk Series Logo"
+                    class="category-logo"
+                  />
+                  Milk Series
+                </button>
+                <button onclick="selectCategory('Soda Refresher')">
+                  <img
+                    src="../Assets/image/soda_refresher.png"
+                    alt="Soda Refresher Logo"
+                    class="category-logo"
+                  />
+                  Soda Refresher
+                </button>
+                <button onclick="selectCategory('Rice Meal')">
+                  <img
+                    src="../Assets/image/"
+                    alt="Rice Meal Logo"
+                    class="category-logo"
+                  />
+                  Rice Meal
+                </button>
+                <button onclick="selectCategory('Snacks')">
+                  <img
+                    src="../Assets/image/snacks.png"
+                    alt="Snacks Logo"
+                    class="category-logo"
+                  />
+                  Snacks
+                </button>
+                <button onclick="selectCategory('Adds on')">
+                  <img
+                    src="../Assets/image/adds_on.png"
+                    alt="Adds-On Logo"
+                    class="category-logo"
+                  />
+                  Adds-On
+                </button>
+              </div>
+            </div>
+
+            <!-- Flavor Section -->
+            <div class="selection-row" id="flavorSection" style="display: none">
+              <h3>Flavor</h3>
+              <div id="flavorOptions" class="flavor-selection">
+                <!-- Flavor buttons will be inserted here -->
+                <button id="goBackButton" onclick="goBack('category')">
+                  Go Back
+                </button>
+              </div>
+            </div>
+
+            <!-- Size Section -->
+            <div class="selection-row" id="sizeSection" style="display: none">
+              <h3>Size & Price</h3>
+              <div id="sizeOptions" class="size-selection">
+                <!-- Size buttons will be inserted here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="order-summary">
+            <h3>Your Order</h3>
+            <div id="orderItems"></div>
+          </div>
+        </section>
+
+        <section class="checkout-section">
+          <h2>Checkout</h2>
+          <p>Total: <span id="totalAmount">₱0.00</span></p>
+
+          <!-- Customer Payment Input -->
+          <div class="payment-section">
+            <label for="amountPaid">Amount Paid:</label>
+            <input
+              type="number"
+              id="amountPaid"
+              placeholder="Enter amount paid"
+              min="0"
+              step="0.01"
+              oninput="updateChange()"
+            />
+          </div>
+
+          <!-- Display Change -->
+          <div class="change-section" style="display: none">
+            <p>Change: <span id="changeAmount">₱0.00</span></p>
+          </div>
+
+          <!-- Buttons for Calculations -->
+          <button onclick="calculateTotal()">Calculate Total</button>
+          <button onclick="redeemPoints()">Redeem Rewards</button>
+          <button onclick="completeOrder()">Complete Order</button>
+
+          <!-- Loyalty Card QR Code -->
+          <h3>Loyalty Card QR Code</h3>
+          <canvas id="qrCodeCanvas"></canvas>
+          <p>Scan this QR code to earn points or redeem products!</p>
+
+          <!-- Add Points and Redeem Buttons -->
+          <button onclick="addPoints()">Add Points</button>
+          <button onclick="redeemProduct()">Redeem Product</button>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  </body>
+</html>
